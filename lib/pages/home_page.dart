@@ -1,5 +1,6 @@
 import 'package:app_gpx_viewer/pages/map_page.dart';
 import 'package:app_gpx_viewer/pages/route_selection_page.dart';
+import 'package:app_gpx_viewer/pages/upload_file.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,7 +28,7 @@ class HomePageState extends State<HomePage> {
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.map_outlined),
-                  label: 'Routes',
+                  label: 'Public Routes',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
@@ -53,7 +54,7 @@ class HomePageState extends State<HomePage> {
               ),
               Container(
                 alignment: Alignment.center,
-                child: const RouteSelectionPage(),
+                child: const UploadFile(),
               ),
             ][_selectedIndex],
           );
