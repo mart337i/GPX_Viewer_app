@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class TrailCardStatic extends StatelessWidget {
   const TrailCardStatic({super.key});
-  final String defaultImageAsset = '/home/mart337i/code/repo/app_gpx_viewer/lib/components/static/template.jpeg';
+  final String defaultImageAsset = 'static/images/template.jpeg';
   
   @override
   Widget build(BuildContext context) {

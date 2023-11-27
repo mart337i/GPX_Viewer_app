@@ -13,6 +13,7 @@ class TrailService {
   Future<Set<Polyline>> fetchTrailsPolyline() async {
     Set<Polyline> polylines = {};
     try {
+      // 10.0.2.2:8000 for andriod emulator
       final response = await http.get(Uri.parse('http://127.0.0.1:8000/get_trail/'));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -38,6 +39,7 @@ class TrailService {
   Future<Set<Polyline>> fetchDebugTrailPolyline() async {
     Set<Polyline> polylines = {};
     try {
+      // 10.0.2.2:8000 for andriod emulator
       final response = await http.get(Uri.parse('http://127.0.0.1:8000/gpx_test/'));
       if (response.statusCode == 200) {
         final document = XmlDocument.parse(response.body);
