@@ -40,7 +40,11 @@ class TrailService {
     Set<Polyline> polylines = {};
     try {
       // 10.0.2.2:8000 for andriod emulator
-      final response = await http.get(Uri.parse('http://127.0.0.1:8000/gpx_test/'));
+      final response = await http.get(Uri.parse('http://127.0.0.1:8000/gpx_test/'), 
+      headers: {
+        "Accept": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      });
       if (response.statusCode == 200) {
         final document = XmlDocument.parse(response.body);
         final points = document.findAllElements('trkpt').map((node) {
