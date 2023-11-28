@@ -14,24 +14,29 @@ class _UploadFileState extends State<UploadFile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () async{
-                  final result = await FilePicker.platform.pickFiles(type: FileType.any, allowMultiple: false);
-                  if (result != null && result.files.isNotEmpty) {
-                    final fileBytes = result.files.first.bytes;
-                    final fileName = result.files.first.name;
-                  
-                  }
-                  // DO find out how to descruct the file
-                } , 
-              child: const Text(
-                "Upload file"
-              )
-            ),
-          ],
+      body: Padding(
+        padding: EdgeInsets.all(15.0),
+        child: Container(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () async{
+                    final result = await FilePicker.platform.pickFiles(type: FileType.any, allowMultiple: false);
+                    if (result != null && result.files.isNotEmpty) {
+                      final fileBytes = result.files.first.bytes;
+                      final fileName = result.files.first.name;
+                    
+                    }
+                    // DO find out how to descruct the file
+                  } , 
+                child: const Text(
+                  "Upload file"
+                )
+              ),
+            ],
+          ),
         ),
       ),
     );

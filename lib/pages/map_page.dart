@@ -2,6 +2,7 @@ import 'package:app_gpx_viewer/service/trails_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
 
@@ -41,8 +42,8 @@ class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
     setState(() {
       _polylines = debugPolylines;
     });
-    // Optionally, update the camera position to focus on the first polyline
     if (debugPolylines.isNotEmpty) {
+      //TODO: Calculate the midle point between cords
       _updateCameraPosition(debugPolylines.first.points.first, 12.0);
     }
   }
@@ -57,6 +58,8 @@ class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
       body: GoogleMap(
         onMapCreated: _onMapCreated,
         polylines: _polylines,
+        myLocationEnabled: true,
+        myLocationButtonEnabled: true,
         markers: _markers,
         initialCameraPosition: CameraPosition(target: _center, zoom: 7.0),
         mapType: MapType.satellite,
