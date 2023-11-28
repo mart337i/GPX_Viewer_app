@@ -13,32 +13,26 @@ class TrailService {
   Future<List<Trail>> fetchTrails() async {
     List<Trail> trails = [];
     try {
-      // 10.0.2.2:8000 for andriod emulator
-      final response = await http.get(Uri.parse('http://127.0.0.1:8000/trail_all/'));
+      final response = await http.get(Uri.parse('http://127.0.0.1:8000/trails/'));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final mappedTrailData = data['trails'].map<Trail>((trailJson) => Trail.fromJson(trailJson)).toList();
+        final items = data['items']; // Assuming 'items' key for paginated data
+        final mappedTrailData = items.map<Trail>((trailJson) => Trail.fromJson(trailJson)).toList();
         trails = mappedTrailData;
-        return trails;
+      } else {
+        print('Failed to fetch trails with status code: ${response.statusCode}');
       }
     } catch (e) {
-      print("Production error: $e");
+      print("Error fetching trails: $e");
     }
     return trails;
   }
 
-
   Future<Set<Polyline>> getTrail(String fileName) async {
     Set<Polyline> polylines = {};
     try {
-      // 10.0.2.2:8000 for andriod emulator
-      final response = await http.get(Uri.parse('http://127.0.0.1:8000/gpx_test/'), 
-      headers: {
-        "Accept": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      });
+      final response = await http.get(Uri.parse('http://127.0.0.1:8000/get-gpx/$fileName'));
       if (response.statusCode == 200) {
-        print(response.headers["name"]);
         final document = XmlDocument.parse(response.body);
         final points = document.findAllElements('trkpt').map((node) {
           return LatLng(
@@ -48,7 +42,7 @@ class TrailService {
         }).toList();
 
         final polyline = Polyline(
-          polylineId: PolylineId('debug_route'),
+          polylineId: PolylineId(fileName),
           points: points,
           color: Colors.blue,
           width: 4,
@@ -56,16 +50,15 @@ class TrailService {
 
         polylines.add(polyline);
       } else {
-        throw HttpException('Failed to load GPX data');
+        print('Failed to load GPX data with status code: ${response.statusCode}');
       }
     } catch (e) {
-      // Handle errors such as no internet connection, timeout, or invalid response
-      print('An error occurred while fetching debug trail data: $e');
-      // You might want to rethrow the error or handle it accordingly
+      print('Error fetching GPX file: $e');
     }
 
     return polylines;
   }
+
   Future<Set<Polyline>> fetchDebugTrailPolyline() async {
     Set<Polyline> polylines = {};
     try {

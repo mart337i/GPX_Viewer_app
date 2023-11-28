@@ -1,10 +1,10 @@
-import 'package:app_gpx_viewer/service/trails_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  final Set<Polyline>? initialPolylines; // Optional initial polylines
+
+  const MapPage({super.key, this.initialPolylines});
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -12,40 +12,29 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
   late GoogleMapController mapController;
-  LatLng _center = const LatLng(55.39594, 10.38831); // Odense
+  LatLng _center = const LatLng(55.39594, 10.38831); // Default center (Odense)
   Set<Polyline> _polylines = Set();
   Set<Marker> _markers = Set();
-
-  final TrailService _debugTrailService = TrailService();
 
   @override
   void initState() {
     super.initState();
+    // Set the initial polylines if provided
+    if (widget.initialPolylines != null) {
+      _polylines = widget.initialPolylines!;
+    }
   }
 
-  Future<void> _onMapCreated(GoogleMapController controller) async {
+  void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-    _loadDebugTrails(); // Optionally load trails here if more appropriate
   }
 
   void _updateCameraPosition(LatLng position, double zoom) {
-    _center = LatLng(position.latitude, position.longitude);
     mapController.animateCamera(
       CameraUpdate.newCameraPosition(
-        CameraPosition(target: _center, zoom: zoom),
+        CameraPosition(target: position, zoom: zoom),
       ),
     );
-  }
-
-  Future<void> _loadDebugTrails() async {
-    Set<Polyline> debugPolylines = await _debugTrailService.fetchDebugTrailPolyline();
-    setState(() {
-      _polylines = debugPolylines;
-    });
-    if (debugPolylines.isNotEmpty) {
-      //TODO: Calculate the midle point between cords
-      _updateCameraPosition(debugPolylines.first.points.first, 12.0);
-    }
   }
 
   @override
