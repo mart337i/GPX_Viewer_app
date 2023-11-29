@@ -13,7 +13,7 @@ class TrailService {
   Future<List<Trail>> fetchTrails() async {
     List<Trail> trails = [];
     try {
-      final response = await http.get(Uri.parse('http://127.0.0.1:8000/trails/'));
+      final response = await http.get(Uri.parse('http://127.0.0.1:8000/trail/trails/?page=1&size=50'));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final items = data['items']; // Assuming 'items' key for paginated data
@@ -31,7 +31,7 @@ class TrailService {
   Future<Set<Polyline>> getTrail(String fileName) async {
     Set<Polyline> polylines = {};
     try {
-      final response = await http.get(Uri.parse('http://127.0.0.1:8000/get-gpx/$fileName'));
+      final response = await http.get(Uri.parse('http://127.0.0.1:8000/trail/get-gpx/$fileName'));
       if (response.statusCode == 200) {
         final document = XmlDocument.parse(response.body);
         final points = document.findAllElements('trkpt').map((node) {

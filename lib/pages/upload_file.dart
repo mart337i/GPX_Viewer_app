@@ -1,3 +1,4 @@
+import 'package:app_gpx_viewer/pages/home_page.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -44,10 +45,9 @@ class _UploadFileState extends State<UploadFile> {
       if (fileBytes != null) {
         final polylines = await _parseGPXFile(fileBytes, fileName);
         // Navigate to the MapPage with the polylines
-        Navigator.push(
-          context,
+        Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => MapPage(initialPolylines: polylines),
+            builder: (context) => HomePage(initialPolylines: polylines),
           ),
         );
       }

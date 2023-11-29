@@ -4,7 +4,7 @@ class Trail {
   final String? location;
   final String? imageUrl;
   final double length;
-  final String estimatedTime;
+  final double estimatedTime;
 
   Trail({
     required this.name,

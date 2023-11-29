@@ -2,6 +2,7 @@ import 'package:app_gpx_viewer/components/custom_text_field.dart';
 import 'package:app_gpx_viewer/components/trail_card_static.dart';
 import 'package:app_gpx_viewer/components/trailcard.dart';
 import 'package:app_gpx_viewer/models/trail.dart';
+import 'package:app_gpx_viewer/pages/home_page.dart';
 import 'package:app_gpx_viewer/pages/map_page.dart';
 import 'package:app_gpx_viewer/service/trails_service.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +23,9 @@ class _RouteSelectionPageState extends State<RouteSelectionPage> {
     try {
       Set<Polyline> polylines = await TrailService().getTrail(filename);
       // Pass the polylines to the MapPage
-      Navigator.push(
-        context,
+      Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => MapPage(initialPolylines: polylines),
+          builder: (context) => HomePage(initialPolylines: polylines),
         ),
       );
     } catch (e) {

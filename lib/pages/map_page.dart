@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatefulWidget {
-  final Set<Polyline>? initialPolylines; // Optional initial polylines
+  final Set<Polyline>? initialPolylines; 
 
   const MapPage({super.key, this.initialPolylines});
 
