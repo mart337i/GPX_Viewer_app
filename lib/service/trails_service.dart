@@ -69,7 +69,6 @@ class TrailService {
         "Access-Control-Allow-Origin": "*"
       });
       if (response.statusCode == 200) {
-        print(response.headers["name"]);
         final document = XmlDocument.parse(response.body);
         final points = document.findAllElements('trkpt').map((node) {
           return LatLng(
