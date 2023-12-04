@@ -17,7 +17,9 @@ class RouteSelectionPage extends StatefulWidget {
 
 class _RouteSelectionPageState extends State<RouteSelectionPage> {  
   final fuzzySearchController = TextEditingController();
-  final trails = TrailService().fetchTrails();
+  
+  int page = 1; 
+  int size = 1;
 
   void getFile(BuildContext context, String filename) async {
     try {
@@ -63,7 +65,7 @@ class _RouteSelectionPageState extends State<RouteSelectionPage> {
           ),
           Expanded(
             child: FutureBuilder<List<Trail>>(
-              future: trails, // This should be the future stored in the state
+              future: TrailService().fetchTrails(page, size),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -73,13 +75,17 @@ class _RouteSelectionPageState extends State<RouteSelectionPage> {
                   return Center(child: Text("No trails found"));
                 } else {
                   return ListView.builder(
-                    itemCount: snapshot.data!.length,
+                    itemCount: snapshot.data!.length + 1,
                     itemBuilder: (context, index) {
-                      // Pass the getFile function as a callback to TrailCard
-                      return TrailCard(
-                        trail: snapshot.data![index],
-                        onTrailTap: (filename) => getFile(context, filename), // Pass a closure that calls getFile with context and filename
-                      );
+                      if (index < snapshot.data!.length){
+                        return TrailCard(
+                          trail: snapshot.data![index],
+                          onTrailTap: (filename) => getFile(context, filename), // Pass a closure that calls getFile with context and filename
+                        );
+                      }else{
+                        page + 1; 
+                          
+                      }
                     },
                   );
                 }
