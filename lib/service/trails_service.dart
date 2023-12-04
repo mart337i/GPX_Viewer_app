@@ -13,7 +13,7 @@ class TrailService {
   Future<List<Trail>> fetchTrails(int page, int size) async {
     List<Trail> trails = [];
     try {
-      final response = await http.get(Uri.parse('http://meo.local/trail/trails/?page=$page&size=$size'));
+      final response = await http.get(Uri.parse('http://192.168.1.104/trail/trails/?page=$page&size=$size'));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final items = data['items']; // Assuming 'items' key for paginated data
@@ -31,7 +31,7 @@ class TrailService {
   Future<Set<Polyline>> getTrail(String fileName) async {
     Set<Polyline> polylines = {};
     try {
-      final response = await http.get(Uri.parse('http://meo.local/trail/get-gpx/$fileName'));
+      final response = await http.get(Uri.parse('http://192.168.1.104/trail/get-gpx/$fileName'));
       if (response.statusCode == 200) {
         final document = XmlDocument.parse(response.body);
         final points = document.findAllElements('trkpt').map((node) {
@@ -63,7 +63,7 @@ class TrailService {
     Set<Polyline> polylines = {};
     try {
       // 10.0.2.2:8000 for andriod emulator
-      final response = await http.get(Uri.parse('http://meo.local/gpx_test/'), 
+      final response = await http.get(Uri.parse('http://192.168.1.104/gpx_test/'),
       headers: {
         "Accept": "application/json",
         "Access-Control-Allow-Origin": "*"

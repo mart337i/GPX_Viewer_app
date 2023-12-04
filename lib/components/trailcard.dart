@@ -29,8 +29,8 @@ class TrailCard extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(
                     height: 200,
-                    child: Image.network(
-                      trail.imageUrl ?? defaultImageAsset,
+                    child: Image(
+                      image: AssetImage(defaultImageAsset),
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
