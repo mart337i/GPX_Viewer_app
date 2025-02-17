@@ -3,6 +3,7 @@
 GPX Viewer is a full-stack application designed to display and manage GPX trails. It consists of a Flutter-based frontend, a FastAPI backend, and MongoDB for data storage. The application allows users to upload, view, and explore GPS tracks.
 
 [Powerpoint based on the project](https://docs.google.com/presentation/d/1QbqVO_oIKaYNiP0BS5sZiNoE1bca5duB7HyNNIWptrw/edit?usp=sharing)
+[Fastapi API](https://github.com/mart337i/Free_hicking_api)
 
 
 ## Table of Contents
